@@ -3,8 +3,10 @@ Sub CurrencyCodes()
 
 Dim currencies(250, 1) As String
 Dim country, temp As String
-Dim counter As Integer
+Dim counter, iterations As Integer
 Dim found As Boolean
+Dim selrange As Range
+Dim selStart, selEnd As Long
 Dim msg, response
 
 ' List of countries
@@ -515,8 +517,19 @@ currencies(249, 1) = "ZWL"
 
 ' User input
 
-country = UCase("*" + InputBox("Please input country name:") + "*")
+Set selrange = ActiveDocument.Range
+selStart = selection.Start
+selEnd = selection.End
+selrange.SetRange Start:=selStart, End:=selEnd
+selrange.Select
 
+If selection.Range.ComputeStatistics(wdStatisticWords) < 1 Then
+    country = UCase("*" + InputBox("Please input country name:") + "*")
+    Else
+        country = UCase("*" + selrange.Text + "*")
+End If
+
+Check:
 For counter = 0 To 249
     temp = currencies(counter, 0)
     If temp Like country Then
@@ -531,6 +544,11 @@ For counter = 0 To 249
 Next counter
 
 If found = False Then
+    If selection.Range.ComputeStatistics(wdStatisticWords) = 1 And iterations < 1 Then
+        country = UCase("*" + InputBox("Please input country name:") + "*")
+        iterations = 1
+        GoTo Check
+    End If
     MsgBox "Country not found."
 End If
 
