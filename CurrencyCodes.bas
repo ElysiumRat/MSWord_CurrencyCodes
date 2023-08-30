@@ -1,7 +1,7 @@
 Attribute VB_Name = "CurrencyCodes"
 Sub CurrencyCodes()
 
-Dim currencies(250, 2) As String
+Dim currencies(249, 2) As String
 Dim givenval, temp As String
 Dim counter, iterations, smlcount As Integer
 Dim found As Boolean
@@ -786,14 +786,18 @@ Check:
 For counter = 0 To 249
     For smlcount = 0 To 2
     temp = UCase(currencies(counter, smlcount))
-        If temp Like givenval Then
-            msg = "List version: Jan 1, 2023." & vbCrLf & vbCrLf & "Country name: " & currencies(counter, 0) & vbCrLf & "Currency name: " & currencies(counter, 1) & vbCrLf & "ISO 4217 code: " & currencies(counter, 2) & vbCrLf & vbCrLf & "Would you like to insert the code?"
-            response = MsgBox(msg, vbYesNo)
-            If response = vbYes Then
-                selection.InsertAfter (currencies(counter, 2) + " ")
+        If givenval = "**" Then
+            Exit Sub
+        Else
+            If temp Like givenval Then
+                msg = "List version: Jan 1, 2023." & vbCrLf & vbCrLf & "Country name: " & currencies(counter, 0) & vbCrLf & "Currency name: " & currencies(counter, 1) & vbCrLf & "ISO 4217 code: " & currencies(counter, 2) & vbCrLf & vbCrLf & "Would you like to insert the code?"
+                response = MsgBox(msg, vbYesNo)
+                If response = vbYes Then
+                    selection.InsertAfter (currencies(counter, 2) + " ")
+                End If
+                found = True
+                Exit For
             End If
-            found = True
-            Exit For
         End If
     Next smlcount
 Next counter
