@@ -3,8 +3,8 @@ Sub CurrencyCodes()
 
 Dim currencies(249, 3) As String
 Dim givenval, temp As String
-Dim counter, iterations, smlcount As Integer
-Dim found As Boolean
+Dim counter, smlcount As Integer
+Dim found, alreadyrun As Boolean
 Dim selrange As Range
 Dim selStart, selEnd As Long
 Dim msg, response
@@ -832,9 +832,9 @@ For counter = 0 To 249
 Next counter
 
 If found = False Then
-    If Selection.Range.ComputeStatistics(wdStatisticWords) = 1 And iterations < 1 Then
+    If Selection.Range.ComputeStatistics(wdStatisticWords) = 1 And alreadyrun = True Then
         givenval = UCase("*" + InputBox("Please input country, currency, or ISO code:") + "*")
-        iterations = 1
+        alreadyrun = True
         GoTo Check
     End If
     MsgBox "Country not found."
