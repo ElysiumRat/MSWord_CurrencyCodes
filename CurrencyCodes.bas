@@ -832,7 +832,7 @@ For counter = 0 To 249
 Next counter
 
 If found = False Then
-    If Selection.Range.ComputeStatistics(wdStatisticWords) = 1 And alreadyrun = True Then
+    If Selection.Range.ComputeStatistics(wdStatisticWords) > 0 And alreadyrun = False Then
         givenval = UCase("*" + InputBox("Please input country, currency, or ISO code:") + "*")
         alreadyrun = True
         GoTo Check
